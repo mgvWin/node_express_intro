@@ -1,0 +1,32 @@
+{
+  "name": "express_intro",
+  "version": "1.0.0",
+  "description": "Express.js education project",
+  "main": "index.js",
+  "scripts": {
+    "build": "tsc",
+    "dev": "nodemon -L",
+    "start": "node ./dist/index.js",
+    "test": "exit 1;",
+    "tslint": "tslint -p tsconfig.json"
+  },
+  "author": "Maksym Honchar",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.16.4"
+  },
+  "devDependencies": {
+    "@types/express": "^4.16.1",
+    "@types/node": "^10.12.19",
+    "nodemon": "^1.18.9",
+    "pre-commit": "^1.2.2",
+    "ts-node": "^8.0.2",
+    "tslint": "^5.12.1",
+    "tslint-config-airbnb": "^5.11.1",
+    "typescript": "^3.2.4"
+  },
+  "pre-commit": [
+    "tslint",
+    "test"
+  ]
+}

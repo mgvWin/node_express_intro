@@ -7,9 +7,10 @@
     "target": "es6",
     "lib": ["dom", "esnext"],
     "outDir": "./dist",
-    "baseUrl": "./src",
-    "alwaysStrict": true
+    "baseUrl": ".",
+    "alwaysStrict": true,
   },
-  "include": ["src/**/*.ts"],
+  "include": ["**/*.ts"],
   "exclude": ["node_modules"],
+  "types": ["ts-essentials"]
 }

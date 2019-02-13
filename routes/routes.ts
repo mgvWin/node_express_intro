@@ -1,11 +1,15 @@
 import { Router } from 'express';
 
-import { UserController, ProductController } from './controllers';
+import { UserController, ProductController, AuthController } from './controllers';
 import { productId, responseErrorHandler } from './middlewares';
 
 const routes: Router = Router();
 
 routes
+  /**
+   * Users
+   */
+  .post('/auth', AuthController.login)
   /**
    * Products
    */

@@ -1,12 +1,16 @@
 import { User } from '../../entities';
+import { crypto } from '../../utils';
+import { APP_CONFIG } from '../../core';
 
 export const users: User[] = [
   {
     name: 'Jon Smeet',
-    login: 'zfdz_ddf',
+    email: 'admin@i.com',
+    password: crypto.encode('123', APP_CONFIG.PASSWORD_SALT),
   },
   {
     name: 'Jimm Doe',
-    login: 'ghg_ddfd@',
+    email: 'user@i.com',
+    password: crypto.encode('456', APP_CONFIG.PASSWORD_SALT),
   },
 ];

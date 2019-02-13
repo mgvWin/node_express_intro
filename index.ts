@@ -1,6 +1,5 @@
-import { APP_CONFIG } from './configs';
 import { routes } from './routes';
-import { App } from './core';
+import { App, APP_CONFIG } from './core';
 
 const app = new App();
 

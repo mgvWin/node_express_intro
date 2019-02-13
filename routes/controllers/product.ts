@@ -4,14 +4,6 @@ import { ProductService } from '../../services/product';
 import { ResponseError } from '../../core';
 
 export class ProductController {
-  static async parse(req: Request, res: Response, next: NextFunction) {
-    try {
-      res.json(await ProductService.findAll());
-    } catch (err) {
-      next(err);
-    }
-  }
-
   static async getAllProducts(req: Request, res: Response, next: NextFunction) {
     try {
       res.json(await ProductService.findAll());

@@ -4,5 +4,5 @@
     "**/*.spec.ts", 
     "node_modules/*"
   ],
-  "exec": "ts-node ./index.ts"
+  "exec": "npm run dev"
 }

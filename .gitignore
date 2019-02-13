@@ -11,3 +11,6 @@ node_modules/
 
 # Project dist folder
 dist/
+
+# Environment configuration with secret data
+.env

@@ -4,8 +4,9 @@
   "description": "Express.js education project",
   "main": "index.js",
   "scripts": {
-    "start": "nodemon -L",
-    "test": "exit 1;",
+    "dev:hmr": "nodemon -L",
+    "dev": "env $(cat .env) ts-node ./index.ts",
+    "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint -p tsconfig.json"
   },
   "author": "Maksym Honchar",

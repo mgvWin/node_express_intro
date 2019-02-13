@@ -7,7 +7,8 @@
 
 ## Development
 
-Run `npm run start` for development by automatically restarting the app when file changes in the directory are detected.
+Run `npm run dev` for development
+Run `npm run dev:hmr` for development by automatically restarting the app when file changes in the directory are detected.
 
 ## Running unit tests
 

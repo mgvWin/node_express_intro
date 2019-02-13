@@ -1,7 +1,4 @@
-type EnvironmentType = 'development' | 'testing'| 'staging' | 'production';
-
 export type Environment = {
-  ENV: EnvironmentType;
-  PORT: number;
+  PORT: string;
   API_BASE: string;
 };

@@ -9,7 +9,7 @@ export class App {
     this.config();
   }
 
-  public listen(port: number, initHandler?: Function): this {
+  public listen(port: string, initHandler?: Function): this {
     this.server = this.app.listen(port, initHandler);
     return this;
   }

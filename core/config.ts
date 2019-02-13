@@ -1,15 +1,8 @@
-import { merge } from 'lodash';
+import { Environment } from '../entities';
 
-import { Environment, DeepPartial, Merge } from '../entities';
-import { DEFAULT_CONFIG } from '../configs/env/default';
+const { API_BASE, PORT } = process.env;
 
-// Array for add environments configs
-const configs: DeepPartial<Environment>[] = [
-
-];
-
-const  PROCESS_ENV = process.env.NODE_ENV;
-
-export const APP_CONFIG: Merge<Environment, DeepPartial<Environment>> = configs
-  .filter(config => config.ENV === PROCESS_ENV)
-  .reduce((appConfig, config) => merge({}, appConfig, config), DEFAULT_CONFIG);
+export const APP_CONFIG: Environment = {
+  API_BASE,
+  PORT,
+};

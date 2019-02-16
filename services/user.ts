@@ -1,7 +1,7 @@
 import { User } from '../entities';
 import { users } from '../db';
-import { crypto } from '../utils';
-import { APP_CONFIG } from '../core';
+import { Crypto } from '../utils';
+import { APP_CONFIG } from '../configs';
 
 export class UserService {
   static async findAll(): Promise<User[]> {
@@ -16,7 +16,7 @@ export class UserService {
       return null;
     }
 
-    const isPasswordMatch = user.password === crypto.encode(password, APP_CONFIG.PASSWORD_SALT);
+    const isPasswordMatch = user.password === Crypto.sha512(password, APP_CONFIG.PASSWORD_SALT);
 
     return isPasswordMatch ? user : null;
   }

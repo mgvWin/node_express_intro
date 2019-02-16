@@ -4,9 +4,15 @@ import { ResponseError } from '../../core';
 
 export function responseErrorHandler(error: ResponseError | Error, req: Request, res: Response, next: NextFunction) {
   if (error instanceof ResponseError) {
-    return res
+    const { data, message } = error;
+
+    res
       .status(error.output.statusCode || 500)
-      .send({ error: { message: error.message } });
+      .send({
+        message,
+        data,
+      });
+  } else {
+    next(error);
   }
-  next(error);
 }

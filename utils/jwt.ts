@@ -1,14 +1,11 @@
-import * as jsonwebtoken from 'jsonwebtoken';
+import { sign, verify, SignOptions, VerifyOptions } from 'jsonwebtoken';
 
-async function sign(payload: string, secret: string, options?: jsonwebtoken.SignOptions): Promise<string> {
-  return jsonwebtoken.sign(payload, secret, options);
+export class Jwt {
+  static async sign(payload: object, secret: string, options?: SignOptions): Promise<string> {
+    return sign(payload, secret, options);
+  }
+
+  static async  verify(token: string, secret: string, options?: VerifyOptions) {
+    return verify(token, secret, options);
+  }
 }
-
-async function verify(token: string, secret: string, options?: jsonwebtoken.VerifyOptions) {
-  return jsonwebtoken.verify(token, secret, options);
-}
-
-export const jwt = {
-  sign,
-  verify,
-};

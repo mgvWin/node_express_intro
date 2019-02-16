@@ -2,7 +2,7 @@ import { Response, Request, NextFunction } from 'express';
 
 import { ResponseError } from '../../core';
 
-export function productId(req: Request, res: Response, next: NextFunction, productId: string) {
+export function productIdValidate(req: Request, res: Response, next: NextFunction, productId: string) {
   const id = parseInt(productId, 10);
 
   if (Number.isNaN(id) || id === 0) {

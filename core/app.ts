@@ -15,8 +15,8 @@ export class App {
   }
 
   // Configure API endpoints.
-  public configApi(basePath: string, routes: express.Router[]): this {
-    this.app.use(basePath, routes);
+  public configApi(basePath: string, route: express.Router): this {
+    this.app.use(basePath, route);
     return this;
   }
 

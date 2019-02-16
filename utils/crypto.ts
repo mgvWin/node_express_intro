@@ -1,14 +1,10 @@
 import { createHmac } from 'crypto';
 
-const HASHING_ALGORITHM = 'sha512';
+export class Crypto {
+  static sha512(payload: string, salt: string): string {
+    const hmac = createHmac('sha512', salt);
+    hmac.update(payload);
 
-function encode(payload: string, salt: string): string {
-  const hmac = createHmac(HASHING_ALGORITHM, salt);
-  hmac.update(payload);
-
-  return hmac.digest('hex');
+    return hmac.digest('hex');
+  }
 }
-
-export const crypto = {
-  encode,
-};

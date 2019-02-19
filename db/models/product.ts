@@ -1,24 +1,26 @@
-import { Product } from '../../entities';
+import * as Sequelize from 'sequelize';
 
-export const products: Product[] = [
-  {
-    id: 1,
-    name: 'Supreme T-Shirt',
-    brand: 'Supreme',
-    price: 99.99,
-    reviews: [
-      'Nice product!!!',
-      'Exelent!!!',
-    ],
+import { ProductInstance, ProductAttributes, ProductModel } from '../../entities';
+
+// tslint:disable-next-line:variable-name
+export const ProductModelAttributes: Sequelize.DefineModelAttributes<ProductAttributes> = {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  {
-    id: 2,
-    name: 'T-Shirt',
-    brand: 'Supreme',
-    price: 1.02,
-    reviews: [
-      'Good!!!',
-      'Ok product!!!',
-    ],
+  name: {
+    type: Sequelize.TEXT('50'),
   },
-];
+  brand: {
+    type: Sequelize.TEXT('50'),
+  },
+  price: {
+    type: Sequelize.FLOAT,
+  },
+};
+
+// tslint:disable-next-line:variable-name
+export const ProductFactory = (sequelize: Sequelize.Sequelize): ProductModel => {
+  return sequelize.define<ProductInstance, ProductAttributes>('product', ProductModelAttributes);
+};

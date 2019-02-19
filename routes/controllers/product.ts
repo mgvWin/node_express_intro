@@ -28,13 +28,7 @@ export class ProductController {
 
   static async getProductReviews(req: Request, res: Response, next: NextFunction) {
     try {
-      const product = await ProductService.findById(+req.params.id);
-
-      if (!product) {
-        throw new ResponseError("Product doesn't found", { statusCode: 404 });
-      }
-
-      res.json(product.reviews || []);
+      res.json(await ProductService.getReviews(+req.params.id));
     } catch (err) {
       next(err);
     }

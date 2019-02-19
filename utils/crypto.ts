@@ -7,4 +7,8 @@ export class Crypto {
 
     return hmac.digest('hex');
   }
+
+  static compareSha512(payload: string, encodeString: string, salt: string): boolean {
+    return encodeString === Crypto.sha512(payload, salt);
+  }
 }

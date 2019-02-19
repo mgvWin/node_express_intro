@@ -1,25 +1,20 @@
-import { Product } from '../entities';
-import { products } from '../db';
+import { db } from '../db';
+import { ProductAttributes, ProductReviewAttributes, Omit } from '../entities';
 
 export class ProductService {
-  static async findAll(): Promise<Product[]> {
-    return [...products];
+  static async findAll(): Promise<ProductAttributes[]> {
+    return db.Product.findAll();
   }
 
-  static async findById(productId: number): Promise<Product> {
-    return products.find(product => product.id === productId);
+  static async findById(productId: number): Promise<ProductAttributes> {
+    return db.Product.findById(productId);
   }
 
-  static async getProductReviews(productId: number): Promise<string[]> {
-    const product = await ProductService.findById(productId);
-    return product ? product.reviews : null;
+  static async getReviews(productId: number): Promise<ProductReviewAttributes[]> {
+    return db.ProductReview.findAll({ where: { productId } });
   }
 
-  static async create(product: Product): Promise<Product> {
-    const productIds = products.map(product => product.id);
-    const newProductId = Math.max.apply(null, productIds) + 1;
-    products.push({ ...product, id: newProductId });
-
-    return ProductService.findById(newProductId);
+  static async create(product: Omit<ProductAttributes, 'id'>): Promise<ProductAttributes> {
+    return db.Product.create(product);
   }
 }

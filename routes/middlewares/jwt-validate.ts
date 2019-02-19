@@ -23,7 +23,6 @@ export async function jwtValidate(req: Request, res: Response, next: NextFunctio
       throw new ResponseError('Token isn\'t valid', { statusCode: 404 });
     }
 
-    req['token'] = decodedToken;
     next();
   } catch (err) {
     next(err);

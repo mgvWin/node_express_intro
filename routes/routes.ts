@@ -1,18 +1,21 @@
 import { Router } from 'express';
-import * as passport from 'passport';
 
 import { UserController, ProductController, AuthController } from './controllers';
 import {
   productIdValidate,
   responseErrorHandler,
+  facebookLoginStrategy,
+  twitterLoginStrategy,
+  googleLoginStrategy,
   jwtValidate,
-  facebookLogin,
-  facebookLoginCallback,
-  twitterLogin,
-  twitterLoginCallback,
-  googleLogin,
-  googleLoginCallback,
 } from './middlewares';
+import { APP_CONFIG } from '../configs';
+
+const { API_BASE } = APP_CONFIG;
+
+facebookLoginStrategy.use(`${API_BASE}/auth/facebook/callback`, AuthController.verifyProfile);
+twitterLoginStrategy.use(`${API_BASE}/auth/twitter/callback`, AuthController.verifyProfile);
+googleLoginStrategy.use(`${API_BASE}/auth/google/callback`, AuthController.verifyProfile);
 
 const routes: Router = Router();
 
@@ -21,18 +24,22 @@ routes
    * Auth
    */
   .post('/auth', AuthController.login)
-  .get('/auth/facebook', facebookLogin)
-  .get('/auth/facebook/callback', facebookLoginCallback, (req, res) => {
+  .get('/auth/facebook', facebookLoginStrategy.authenticate())
+  .get('/auth/facebook/callback', facebookLoginStrategy.authenticate({ failureRedirect: '/' }), (req, res) => {
     // Successful authentication.
   })
-  .get('/auth/twitter', twitterLogin)
-  .get('/auth/twitter/callback', twitterLoginCallback, (req, res) => {
+  .get('/auth/twitter', facebookLoginStrategy.authenticate())
+  .get('/auth/twitter/callback', facebookLoginStrategy.authenticate({ failureRedirect: '/' }), (req, res) => {
     // Successful authentication.
   })
-  .get('/auth/google', googleLogin)
-  .get('/auth/google/callback', googleLoginCallback, (req, res) => {
-    // Successful authentication.
-  })
+  .get('/auth/google', googleLoginStrategy.authenticate())
+  .get(
+    '/auth/google/callback',
+    googleLoginStrategy.authenticate({ scope: ['https://www.googleapis.com/auth/userinfo.profile'] }),
+    (req, res) => {
+      // Successful authentication.
+    },
+  )
   /**
    * Products
    */

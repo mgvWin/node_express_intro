@@ -1,18 +1,45 @@
-import { User } from '../../entities';
+import * as Sequelize from 'sequelize';
+
 import { Crypto } from '../../utils';
 import { APP_CONFIG } from '../../configs';
+import { UserModel, UserInstance, UserAttributes } from '../../entities';
 
-export const users: User[] = [
-  {
-    id: '1',
-    name: 'Jon Smeet',
-    email: 'admin@i.com',
-    password: Crypto.sha512('123', APP_CONFIG.PASSWORD_SALT),
+// tslint:disable-next-line:variable-name
+export const UserModelAttributes: Sequelize.DefineModelAttributes<UserAttributes> = {
+  id: {
+    type: Sequelize.INTEGER,
+    autoIncrement: true,
+    primaryKey: true,
   },
-  {
-    id: '2',
-    name: 'Jimm Doe',
-    email: 'user@i.com',
-    password: Crypto.sha512('456', APP_CONFIG.PASSWORD_SALT),
+  firstName: {
+    type: Sequelize.STRING,
+    field: 'first_name',
   },
-];
+  lastName: {
+    type: Sequelize.STRING,
+    field: 'last_name',
+  },
+  email: {
+    type: Sequelize.STRING,
+    unique: true,
+  },
+  password: {
+    type: Sequelize.STRING,
+  },
+};
+
+// tslint:disable-next-line:variable-name
+export const  UserFactory = (sequelize: Sequelize.Sequelize): UserModel => {
+  return sequelize.define<UserInstance, UserAttributes>(
+    'user',
+    UserModelAttributes,
+    {
+      setterMethods: {
+        // tslint:disable-next-line:object-literal-shorthand
+        password: function (password: string): void {
+          this.setDataValue('password', Crypto.sha512(password, APP_CONFIG.PASSWORD_SALT));
+        },
+      },
+    },
+  );
+};

@@ -1,16 +1,16 @@
-import * as dotenv from 'dotenv';
-
 import { Environment } from '../entities';
-
-// Read config variables from .env file
-dotenv.config();
 
 const {
   API_BASE,
-  PORT,
+  PORT = '4200',
   JWT_PRIVATE_KEY = '',
   JWT_PUBLIC_KEY = '',
   PASSWORD_SALT,
+  DB_PSQL_HOST,
+  DB_PSQL_PORT,
+  DB_PSQL_USER,
+  DB_PSQL_PASSWORD,
+  DB_PSQL_DB_NAME,
   FACEBOOK_APP_ID,
   FACEBOOK_APP_SECRET,
   TWITTER_CONSUMER_KEY,
@@ -23,6 +23,15 @@ export const APP_CONFIG: Environment = {
   API_BASE,
   PORT,
   PASSWORD_SALT,
+  DB: {
+    PSQL: {
+      HOST: DB_PSQL_HOST,
+      PORT: parseInt(DB_PSQL_PORT, 10),
+      USER: DB_PSQL_USER,
+      PASSWORD: DB_PSQL_PASSWORD,
+      DB_NAME: DB_PSQL_DB_NAME,
+    },
+  },
   JWT: {
     PRIVATE_KEY: JWT_PRIVATE_KEY,
     PUBLIC_KEY: JWT_PUBLIC_KEY,

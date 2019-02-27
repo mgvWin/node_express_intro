@@ -8,9 +8,7 @@
     "dev": "ts-node -r dotenv/config ./index.ts",
     "test": "echo \"Error: no test specified\" && exit 1",
     "tslint": "tslint -p tsconfig.json",
-    "dev:db:migrate": "node -r dotenv/config node_modules/.bin/sequelize db:migrate:undo:all && node -r dotenv/config node_modules/.bin/sequelize db:migrate",
-    "dev:db:seeders": "node -r dotenv/config node_modules/.bin/sequelize db:seed:undo:all && node -r dotenv/config node_modules/.bin/sequelize db:seed:all",
-    "dev:db:init": "tsc && npm run dev:db:migrate && npm run dev:db:seeders"
+    "dev:db:migrate": "bash database-migrate.sh"
   },
   "author": "Maksym Honchar",
   "license": "ISC",

@@ -12,5 +12,8 @@ node_modules/
 # Project dist folder
 dist/
 
+# Temp folders
+migrate_tmp/
+
 # Environment configuration with secret data
 .env

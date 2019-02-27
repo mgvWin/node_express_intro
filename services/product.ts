@@ -17,4 +17,8 @@ export class ProductService {
   static async create(product: Omit<ProductAttributes, 'id'>): Promise<ProductAttributes> {
     return db.Product.create(product);
   }
+
+  static async remove(productId: number): Promise<null> {
+    return;
+  }
 }

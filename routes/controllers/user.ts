@@ -10,4 +10,13 @@ export class UserController {
       next(err);
     }
   }
+
+  static async deleteUser(req: Request, res: Response, next: NextFunction) {
+    try {
+      await UserService.remove(+req.params.userId);
+      res.status(200).send();
+    } catch (err) {
+      next(err);
+    }
+  }
 }

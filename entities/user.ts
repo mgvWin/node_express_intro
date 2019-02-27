@@ -1,18 +1,14 @@
-import * as Sequelize from 'sequelize';
+import { Document } from 'mongoose';
 
 // fields of a single database row
 export interface UserAttributes {
-  id?: number;
-  firstName: string;
-  lastName: string;
+  username: string;
   email: string;
   password?: string;
-  createdAt?: Date;
-  updatedAt?: Date;
+  lastModifiedDate?: Number;
 }
 
-// Single database row
-export interface UserInstance extends Sequelize.Instance<UserAttributes>, UserAttributes {}
-
-// Database table
-export interface UserModel extends Sequelize.Model<UserInstance, UserAttributes> {}
+// Object of schema methods wthere we describe it
+export interface UserModel extends UserAttributes, Document {
+  comparePassword: (password) => boolean;
+}

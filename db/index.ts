@@ -1,6 +1,6 @@
 import * as Sequelize from 'sequelize';
 import { APP_CONFIG } from '../configs';
-import { UserFactory, ProductFactory, ProductReviewFactory, AuthTokenFactory } from './models';
+import { UserFactory, ProductFactory, ProductReviewFactory, AuthTokenFactory, CityFactory } from './models';
 
 const {
   DB: {
@@ -34,10 +34,12 @@ const User = UserFactory(sequelize);
 const Product = ProductFactory(sequelize);
 const ProductReview = ProductReviewFactory(sequelize);
 const AuthToken = AuthTokenFactory(sequelize);
+const City = CityFactory();
 
 export const db = {
   User,
   Product,
   ProductReview,
   AuthToken,
+  City,
 };

@@ -1,6 +1,6 @@
 import { Router } from 'express';
 
-import { UserController, ProductController, AuthController } from './controllers';
+import { UserController, ProductController, AuthController, CityController } from './controllers';
 import {
   productIdValidate,
   responseErrorHandler,
@@ -51,7 +51,15 @@ routes
   /**
    * Users
    */
+  .get('/cities', jwtValidate, CityController.getAllCities)
+  .post('/cities', jwtValidate, CityController.addCity)
+  .put('/cities/:cityId', jwtValidate, CityController.upsertCity)
+  .delete('/cities/:cityId', jwtValidate, CityController.deleteCity)
+  /**
+   * Users
+   */
   .get('/users', jwtValidate, UserController.getAllUsers)
+  .delete('/users/:userId', jwtValidate, UserController.deleteUser)
   /**
    * Error handler
    */

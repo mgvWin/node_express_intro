@@ -1,0 +1,376 @@
+---
+swagger: "2.0"
+info:
+  description: Node.js education project API
+  version: 1.0.0
+  title: Node.js API
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+host: virtserver.swaggerhub.com
+basePath: /MHV5/Nodejs2/1.0.0
+tags:
+- name: auth
+- name: products
+- name: cities
+- name: users
+schemes:
+- https
+- http
+paths:
+  /auth:
+    post:
+      tags:
+      - auth
+      summary: User authentication by local strategy
+      description: |
+        By passing in the appropriate options, you can login in the system by local strategy
+      operationId: authUser
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: User login credentions
+        required: true
+        schema:
+          $ref: '#/definitions/UserLoginCredentials'
+      responses:
+        404:
+          description: Bad username/password combination
+  /products:
+    get:
+      tags:
+      - products
+      summary: Get products list
+      description: |
+        Get full products list
+      operationId: productsGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: search result
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductItem'
+    post:
+      tags:
+      - products
+      summary: Add product to list
+      description: |
+        Product object that needs to be added to the store
+      operationId: productsPost
+      produces:
+      - application/json
+      parameters:
+      - in: body
+        name: body
+        description: Product data to add
+        required: true
+        schema:
+          $ref: '#/definitions/ProductItemCreate'
+      responses:
+        200:
+          description: Created product
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/ProductItem'
+  /products/{productID}:
+    get:
+      tags:
+      - products
+      summary: Get a product
+      operationId: productGet
+      produces:
+      - application/json
+      parameters:
+      - name: productID
+        in: path
+        description: Product ID
+        required: true
+        type: integer
+        format: int64
+      responses:
+        200:
+          description: Product
+          schema:
+            $ref: '#/definitions/ProductItem'
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Product not found
+  /products/{productID}/reviews:
+    get:
+      tags:
+      - products
+      summary: Get product reviews
+      operationId: productReviewsGet
+      produces:
+      - application/json
+      parameters:
+      - name: productID
+        in: path
+        description: Product ID
+        required: true
+        type: integer
+      responses:
+        400:
+          description: Invalid ID supplied
+        404:
+          description: Reviews for product not found
+  /cities:
+    get:
+      tags:
+      - cities
+      summary: Get cities list
+      description: |
+        Get full cities list
+      operationId: citiesGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: search result
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CityItem'
+    post:
+      tags:
+      - cities
+      summary: Add city to list
+      description: |
+        City object that needs to be added to the store
+      operationId: citiesPost
+      parameters:
+      - in: body
+        name: body
+        description: City data to add
+        required: true
+        schema:
+          $ref: '#/definitions/CityItemPut'
+      responses:
+        200:
+          description: Saved city with id
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CityItem'
+  /cities/{cityID}:
+    put:
+      tags:
+      - cities
+      summary: Upsert city
+      description: |
+        Update city by ID or create new if ID doesn't preset in database
+      operationId: cityPut
+      produces:
+      - application/json
+      parameters:
+      - name: cityID
+        in: path
+        description: City ID
+        required: true
+        type: integer
+      - in: body
+        name: body
+        description: City data to upsert
+        required: true
+        schema:
+          $ref: '#/definitions/CityItemPut'
+      responses:
+        200:
+          description: Upserted city object
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/CityItem'
+    delete:
+      tags:
+      - cities
+      summary: Delete city from database
+      description: |
+        Delete city object
+      operationId: cityDelete
+      produces:
+      - application/json
+      parameters:
+      - name: cityID
+        in: path
+        description: City ID
+        required: true
+        type: integer
+      responses:
+        200:
+          description: City deleted successfully
+        400:
+          description: Invalid ID supplied
+        404:
+          description: City not found
+  /users:
+    get:
+      tags:
+      - users
+      summary: Get users list
+      description: |
+        Get full users list
+      operationId: usersGet
+      produces:
+      - application/json
+      parameters: []
+      responses:
+        200:
+          description: search result
+          schema:
+            type: array
+            items:
+              $ref: '#/definitions/User'
+  /users/{userId}:
+    delete:
+      tags:
+      - users
+      summary: Delete user
+      description: |
+        Delete user by recived ID
+      operationId: userDelete
+      produces:
+      - application/json
+      parameters:
+      - name: userId
+        in: path
+        description: User ID
+        required: true
+        type: integer
+      responses:
+        200:
+          description: User delete successfully
+        400:
+          description: Invalid ID supplied
+        404:
+          description: User not found
+definitions:
+  UserLoginCredentials:
+    type: object
+    required:
+    - email
+    - password
+    properties:
+      email:
+        type: string
+        example: some@some.com
+      password:
+        type: string
+        example: "11111111"
+  ProductItem:
+    type: object
+    required:
+    - brand
+    - id
+    - name
+    - price
+    properties:
+      id:
+        type: string
+        example: "2"
+      name:
+        type: string
+        example: Widget Adapter
+      price:
+        type: string
+        format: integer
+        example: "3.45"
+      brand:
+        type: string
+        example: Nike
+  ProductItemCreate:
+    type: object
+    required:
+    - brand
+    - name
+    - price
+    properties:
+      name:
+        type: string
+        example: Widget Adapter
+      price:
+        type: string
+        format: integer
+        example: "3.45"
+      brand:
+        type: string
+        example: Nike
+  CityItem:
+    type: object
+    required:
+    - country
+    - id
+    - lastModifiedDate
+    - location
+    - name
+    properties:
+      id:
+        type: string
+        example: "2"
+      name:
+        type: string
+        example: Vinnitsy
+      country:
+        type: string
+        example: Ukraine
+      location:
+        $ref: '#/definitions/CityLocation'
+      lastModifiedDate:
+        type: string
+        example: 2019-11-04
+  CityItemPut:
+    type: object
+    required:
+    - country
+    - lastModifiedDate
+    - location
+    - name
+    properties:
+      name:
+        type: string
+        example: Vinnitsy
+      country:
+        type: string
+        example: Ukraine
+      location:
+        $ref: '#/definitions/CityLocation'
+      lastModifiedDate:
+        type: string
+        example: 2019-11-04
+  CityLocation:
+    type: object
+    required:
+    - lat
+    - long
+    properties:
+      lat:
+        type: number
+        example: 34.678
+      long:
+        type: number
+        example: 23.56789
+  User:
+    type: object
+    required:
+    - email
+    - lastModifiedDate
+    - username
+    properties:
+      username:
+        type: string
+        example: Maksim H
+      email:
+        type: string
+        example: admin@admin.com
+      lastModifiedDate:
+        type: string
+        example: 2019-11-04
